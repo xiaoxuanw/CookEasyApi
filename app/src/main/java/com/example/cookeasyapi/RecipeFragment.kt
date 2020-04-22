@@ -60,7 +60,7 @@ class RecipeFragment: Fragment() {
 
 
                 //your code here
-                val input: String = searchBox.text.toString()+"?apiKey=6eaa5f8381a34866833a7a9d0fc1d599"
+                val input: String = searchBox.text.toString()
                 viewModel.getRecipe(input)
                 true
             }
