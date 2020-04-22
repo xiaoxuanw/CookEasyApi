@@ -14,10 +14,10 @@ class RecipeRepository {
     private val service = ApiClient.makeRetrofitService()
 
     //searches for recipe based on string value
-    fun getRecipeBySearch(resBody : MutableLiveData<RecipeList>, param : String) {
+    fun getRecipeBySearch(resBody : MutableLiveData<RecipeList>,input:String) {
         //set the coroutine on a background thread
         CoroutineScope(Dispatchers.IO).launch {
-            var response: Response<RecipeList> = service.getRecipeBySearchQuery(param)
+            var response: Response<RecipeList> = service.getRecipeBySearchQuery(input)
 
             //when the coroutine finishes
             withContext(Dispatchers.Main){

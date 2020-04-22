@@ -13,7 +13,7 @@ class RecipeViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private val recipeNameView: TextView = itemView.findViewById(R.id.recipe_Name)
     //private val artistImage: ImageView = itemView.findViewById(R.id.artist_image)
 
-    fun bind(recipe: Recipe){
+    fun bind(recipe: Recipe) {
         recipeNameView.text = recipe.title
     }
 //    fun bindImage(artist: Artist){
@@ -22,8 +22,8 @@ class RecipeViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 //            .into(artistImage)
 //    }
 
-    fun setClickListener(recipe: Recipe, activity: Activity?){
-        recipeNameView.setOnClickListener{
+    fun setClickListener(recipe: Recipe, activity: Activity?) {
+        recipeNameView.setOnClickListener {
             //extract recipe info
             var recipeTitle = recipe.title
             var recipeImage = recipe.image
@@ -36,7 +36,7 @@ class RecipeViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             var context = recipeNameView.context
 
             val intent = Intent(activity, RecipeActivity::class.java)
-            intent.putExtra("recipeTitle", recipeTitle )
+            intent.putExtra("recipeTitle", recipeTitle)
             intent.putExtra("recipeImage", recipeImage)
             intent.putExtra("recipeServings", recipeServings)
             intent.putExtra("recipeLength", recipeLength)
@@ -45,7 +45,7 @@ class RecipeViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             println("clicked")
         }
     }
-
+}
 class RecipeAdapter(private val list: ArrayList<Recipe>, private val activity: Activity?)
     : RecyclerView.Adapter<RecipeViewHolder>() {
 
@@ -63,5 +63,4 @@ class RecipeAdapter(private val list: ArrayList<Recipe>, private val activity: A
 
     override fun getItemCount(): Int = list.size
 
-}
 }

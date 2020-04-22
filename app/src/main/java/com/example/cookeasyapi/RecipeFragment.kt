@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cookeasyapi.R
 import com.example.cookeasyapi.Recipe
 import com.example.cookeasyapi.ViewModel.RecipeViewModel
@@ -42,5 +44,27 @@ class RecipeFragment: Fragment() {
         searchButton = search_button
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
         val activity: Activity? = activity
+
+
+        //set recycler view
+        val recyclerView = recyclerView
+        val adapter =RecipeAdapter(recipeList,activity)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = GridLayoutManager(this.context,2)
+
+        searchBox.setOnEditorActionListener() { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val searchAdapter = RecipeAdapter(recipeList,activity)
+                recyclerView.adapter = searchAdapter
+                recyclerView.layoutManager = GridLayoutManager(this.context,2)
+
+
+                //your code here
+                val input: String = searchBox.text.toString()+"?apiKey=6eaa5f8381a34866833a7a9d0fc1d599"
+                viewModel.getRecipe(input)
+                true
+            }
+            false
+        }
 }
 }
