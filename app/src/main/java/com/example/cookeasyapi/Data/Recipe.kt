@@ -1,8 +1,7 @@
-package com.example.cookeasyapi
+package com.example.cookeasyapi.Data
 
 data class Recipe (
     val id: Int,
-    val includeNutrition:Boolean,
     val title: String,
     val image: String,
     val servings: Int,

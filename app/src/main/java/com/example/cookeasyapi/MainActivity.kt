@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentAdapter = ViewPagerAdapter(supportFragmentManager)
         viewPager.adapter = fragmentAdapter
-       // tabs.setUpWithViewPager(viewPager)
 
     }
     override fun onStart() {

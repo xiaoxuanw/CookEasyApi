@@ -1,7 +1,7 @@
 package com.example.cookeasyapi.Network
 
 import androidx.lifecycle.MutableLiveData
-import com.example.cookeasyapi.RecipeList
+import com.example.cookeasyapi.Data.DataRecipe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,10 +14,10 @@ class RecipeRepository {
     private val service = ApiClient.makeRetrofitService()
 
     //searches for recipe based on string value
-    fun getRecipeBySearch(resBody : MutableLiveData<RecipeList>,input:String) {
+    fun getRecipeBySearch(resBody : MutableLiveData<DataRecipe>, param:String) {
         //set the coroutine on a background thread
         CoroutineScope(Dispatchers.IO).launch {
-            var response: Response<RecipeList> = service.getRecipeBySearchQuery(input)
+            var response: Response<DataRecipe> = service.getRecipeBySearchQuery(param)
 
             //when the coroutine finishes
             withContext(Dispatchers.Main){

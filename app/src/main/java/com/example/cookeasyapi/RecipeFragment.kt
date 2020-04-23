@@ -9,10 +9,11 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.cookeasyapi.R
-import com.example.cookeasyapi.Recipe
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cookeasyapi.Data.Recipe
 import com.example.cookeasyapi.ViewModel.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_recipe.*
 
@@ -45,19 +46,32 @@ class RecipeFragment: Fragment() {
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
         val activity: Activity? = activity
 
-
         //set recycler view
         val recyclerView = recyclerView
         val adapter =RecipeAdapter(recipeList,activity)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(this.context,2)
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+
+        //observe the allEvents LiveData
+        viewModel!!.recipeList.observe(viewLifecycleOwner, Observer { recipes->
+            // Update the cached copy of the words in the adapter.
+            recipeList.clear()
+            recipeList.addAll(recipes.data)
+            adapter.notifyDataSetChanged()
+        })
 
         searchBox.setOnEditorActionListener() { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val searchAdapter = RecipeAdapter(recipeList,activity)
                 recyclerView.adapter = searchAdapter
-                recyclerView.layoutManager = GridLayoutManager(this.context,2)
-
+                recyclerView.layoutManager = LinearLayoutManager(this.context)
+                //observe the allEvents LiveData
+                viewModel.recipeList.observe(viewLifecycleOwner, Observer { recipes->
+                    // Update the cached copy of the words in the adapter.
+                    recipeList.clear()
+                    recipeList.addAll(recipes.data)
+                    adapter.notifyDataSetChanged()
+                })
 
                 //your code here
                 val input: String = searchBox.text.toString()
@@ -67,4 +81,8 @@ class RecipeFragment: Fragment() {
             false
         }
 }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
+
 }
