@@ -1,6 +1,7 @@
 package com.example.cookeasyapi.Network
 
 import androidx.lifecycle.MutableLiveData
+import com.example.cookeasyapi.Data.DataIngredients
 import com.example.cookeasyapi.Data.DataRecipe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,36 @@ class RecipeRepository {
         //set the coroutine on a background thread
         CoroutineScope(Dispatchers.IO).launch {
             var response: Response<DataRecipe> = service.getRecipeBySearchQuery(param)
+
+            //when the coroutine finishes
+            withContext(Dispatchers.Main){
+                try{
+                    //success case
+                    if(response.isSuccessful){
+                        //println(response.body()?.size.toString() + " is the size")
+                        resBody.value = response.body()
+                        println("success")
+                        println(response)
+
+                    } else{
+                        //response error
+                        println("HTTP error")
+                    }
+                }catch (e: HttpException) {
+                    //http exception
+                    println("HTTP Exception")
+                } catch (e: Throwable) {
+                    //error
+                    println("Error")
+                }
+            }
+        }
+    }
+    //searches for recipe ingredients based on ID
+    fun getIngredientsByID(resBody : MutableLiveData<DataIngredients>, id:Int) {
+        //set the coroutine on a background thread
+        CoroutineScope(Dispatchers.IO).launch {
+            var response: Response<DataIngredients> = service.getIngredientsByID(id)
 
             //when the coroutine finishes
             withContext(Dispatchers.Main){

@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cookeasyapi.Data.Recipe
+import com.example.cookeasyapi.ViewModel.RecipeIngredientViewModel
 
 class RecipeViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.recipe_item, parent, false)) {
     private val recipeNameView: TextView = itemView.findViewById(R.id.recipe_Name)
     //private val artistImage: ImageView = itemView.findViewById(R.id.artist_image)
+
 
     fun bind(recipe: Recipe) {
         recipeNameView.text = recipe.title
@@ -25,6 +27,7 @@ class RecipeViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun setClickListener(recipe: Recipe, activity: Activity?) {
         recipeNameView.setOnClickListener {
             //extract recipe info
+            var recipeID = recipe.id
             var recipeTitle = recipe.title
             var recipeImage = recipe.image
             var recipeServings = recipe.servings
@@ -36,6 +39,7 @@ class RecipeViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             var context = recipeNameView.context
 
             val intent = Intent(activity, RecipeActivity::class.java)
+            intent.putExtra("recipeID",recipeID)
             intent.putExtra("recipeTitle", recipeTitle)
             intent.putExtra("recipeImage", recipeImage)
             intent.putExtra("recipeServings", recipeServings)
