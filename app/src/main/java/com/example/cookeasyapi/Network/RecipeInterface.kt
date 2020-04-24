@@ -13,7 +13,7 @@ interface RecipeInterface {
     suspend fun getRecipeBySearchQuery(@Query("query") query: String)
             : Response<DataRecipe>
 
-    @GET("recipes/?apiKey=6eaa5f8381a34866833a7a9d0fc1d599")
-    suspend fun getIngredientsByID(@Query("id") id: Int)
+    @GET("recipes/{id}/ingredientWidget.json?apiKey=6eaa5f8381a34866833a7a9d0fc1d599")
+    suspend fun getIngredientsByID(@Path("id") id: Int)
         : Response<DataIngredients>
 }
